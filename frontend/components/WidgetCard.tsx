@@ -16,7 +16,7 @@ interface WidgetCardProps {
 
 export function WidgetCard({ widget, onDelete }: WidgetCardProps) {
   return (
-    <Card className="relative border-white overflow-hidden rounded-3xl bg-[#00000060] shadow-lg hover:shadow-xl hover:scale-105 transition duration-300 pb-0 w-[300px] h-[420px]">
+    <Card className="relative border-white overflow-hidden rounded-3xl bg-[#00000060] shadow-lg hover:shadow-xl hover:scale-105 transition duration-300 pb-0 w-[300px] h-[440px]">
       {/* Main content */}
       <CardContent className="mt-6 p-6 shadow-lg h-full">
         <Button
