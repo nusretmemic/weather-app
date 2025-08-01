@@ -1,32 +1,28 @@
+// backend/app.ts
 import express from "express";
-import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import {
-  listWidgets,
-  createWidget,
-  deleteWidget,
-} from "./controllers/widgetController";
-import { locationSearchHandler } from "./controllers/locationController";
 
-dotenv.config();
+import { commonMiddleware } from "./middleware";
+import locationRoutes from "./routes/locationRoutes";
+import widgetRoutes from "./routes/widgetRoutes";
+
+dotenv.config(); // Load environment variables
+
+// Initialize Express app
 const app = express();
 
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "DELETE", "OPTIONS"],
-  })
-);
+// Common middleware (CORS, JSON parser)
+app.use(commonMiddleware);
 
-app.use(express.json());
+// API routes
+app.use("/locations", locationRoutes);
+app.use("/widgets", widgetRoutes);
 
-app.get("/locations", locationSearchHandler);
+// Root health-check
+app.get("/", (_req, res) => res.send("✅ Weather App API is running"));
 
-app.get("/widgets", listWidgets);
-app.post("/widgets", createWidget);
-app.delete("/widgets/:id", deleteWidget);
-
+// Connect DB & start server
 const PORT = process.env.PORT || 5000;
 mongoose
   .connect(process.env.MONGODB_URI!)
