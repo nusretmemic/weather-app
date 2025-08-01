@@ -1,13 +1,14 @@
 "use client";
-import { useWidgets } from "@/hooks/useWidgets";
+import { useDeleteWidget, useWidgets } from "@/hooks/useWidgets";
 import { WidgetCard } from "./WidgetCard";
 
-interface WidgetListProps {
-  onDelete: (id: number) => void;
-}
-
-export function WidgetList({ onDelete }: WidgetListProps) {
+export function WidgetList() {
   const { data: widgets } = useWidgets();
+  const { mutate: deleteWidget } = useDeleteWidget();
+
+  const onDelete = (id: number) => {
+    deleteWidget(id);
+  };
 
   return (
     <div className="my-10 flex flex-wrap container mx-auto gap-8 px-8">
