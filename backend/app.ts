@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import { commonMiddleware } from "./middleware";
 import locationRoutes from "./routes/locationRoutes";
 import widgetRoutes from "./routes/widgetRoutes";
+import { errorHandler } from "./middleware/errorHandler";
 
 dotenv.config(); // Load environment variables
 
@@ -13,6 +14,8 @@ const app = express();
 
 // Common middleware (CORS, JSON parser)
 app.use(commonMiddleware);
+// Error handling middleware
+app.use(errorHandler);
 
 // API routes
 app.use("/locations", locationRoutes);
