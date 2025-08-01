@@ -1,0 +1,25 @@
+{
+  "name": "weather-app-monorepo",
+  "scripts": {
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "lint": "eslint \"**/*.{js,ts,tsx}\" --fix",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nusretmemic/weather-app.git"
+  },
+  "author": "Nusret Memic",
+  "bugs": {
+    "url": "https://github.com/nusretmemic/weather-app/issues"
+  },
+  "homepage": "https://github.com/nusretmemic/weather-app#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.0",
+    "eslint": "^9.32.0",
+    "jest": "^30.0.5",
+    "typescript": "^5.9.2"
+  }
+}
