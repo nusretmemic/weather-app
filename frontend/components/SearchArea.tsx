@@ -14,7 +14,7 @@ export function SearchArea() {
     });
   };
   return (
-    <div className="max-w-3xl p-6 bg-[#ffffff80] rounded-lg m-4 mt-10 h-[93vh] shadow-md z-10 relative flex flex-col items-center gap-6">
+    <div className="max-w-3xl p-6 bg-[#ffffff80] rounded-lg mx-auto lg:h-[93vh] shadow-md z-10 relative flex flex-col items-center gap-6">
       <h1 className="text-2xl font-bold text-center">Weather Widgets</h1>
       <p className="text-center">
         Add your favorite locations to get the latest weather updates.

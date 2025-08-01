@@ -63,8 +63,8 @@ export function SearchBar({ onSelect }: SearchBarProps) {
                 className="px-4 py-3 hover:bg-gray-100 cursor-pointer border-b last:border-b-0 border-gray-200"
                 onClick={() => {
                   onSelect(s);
-                  setInput("");
                   setOpen(false);
+                  setInput("");
                 }}
               >
                 {s.name}, {s.country}
