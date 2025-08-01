@@ -7,7 +7,8 @@ export async function listWidgets(req: Request, res: Response) {
   // add live weather data to each widget
   const withWeather = await Promise.all(
     widgets.map(async (w) => ({
-      ...w.toObject(),
+      id: w._id,
+      location: w.location,
       weather: await getWeather(w),
     }))
   );
