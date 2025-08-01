@@ -3,6 +3,6 @@ import { locationSearchHandler } from "../controllers/locationController";
 
 const router = Router();
 
-router.get("/", locationSearchHandler);
+router.get("/search", locationSearchHandler);
 
 export default router;

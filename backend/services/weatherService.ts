@@ -1,12 +1,7 @@
 import axios from "axios";
 import { getCached, setCached } from "../cache/weatherCache";
 import { IWidget } from "../models/Widget";
-
-export interface WeatherData {
-  temperature: number;
-  windSpeed: number;
-  updatedAt: Date; // when the data was last fetched
-}
+import { WeatherData } from "../types";
 
 /**
  * Fetch live weather for a widget, with 5-min caching via weatherCache.

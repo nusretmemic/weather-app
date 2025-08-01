@@ -44,7 +44,9 @@ export default function Home() {
     const timeout = setTimeout(async () => {
       try {
         const { data } = await axios.get<LocationSuggestion[]>(
-          `http://localhost:5000/locations?q=${encodeURIComponent(query)}`
+          `http://localhost:5000/locations/search?q=${encodeURIComponent(
+            query
+          )}`
         );
         setSuggestions(data);
         setShowDropdown(true);

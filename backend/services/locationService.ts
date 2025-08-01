@@ -1,11 +1,5 @@
 import axios from "axios";
-
-export interface LocationSuggestion {
-  name: string; // e.g. "Stuttgart"
-  country: string; // e.g. "Germany"
-  lat: number;
-  lng: number;
-}
+import { LocationSuggestion } from "../types";
 
 export async function searchLocations(
   city: string
