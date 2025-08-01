@@ -11,15 +11,20 @@ interface SearchBarProps {
 export function SearchBar({ onSelect }: SearchBarProps) {
   const [inputValue, setInputValue] = useState<string>("");
   const [query, setQuery] = useState<string>("");
+  const [isTyping, setIsTyping] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Debounce inputValue -> query
   useEffect(() => {
     const handler = setTimeout(() => {
+      setIsTyping(false);
       setQuery(inputValue.trim());
     }, 300);
-    return () => clearTimeout(handler);
+    return () => {
+      clearTimeout(handler);
+      setIsTyping(true); // Set typing state when input changes
+    };
   }, [inputValue]);
 
   const { data: suggestions = [], isLoading } = useLocation(query);
@@ -57,13 +62,15 @@ export function SearchBar({ onSelect }: SearchBarProps) {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           className="w-full placeholder:text-gray-600 bg-white/80 text-gray-900 focus:ring-2 focus:ring-blue-500 transition-colors duration-200 pl-10 border-gray-300 border-2 focus:border-blue-500 focus:border-0"
-          onFocus={() => setOpen(true)}
+          onFocus={() => setOpen(true)} // Open dropdown on focus
         />
       </div>
       {open && (
         <div className="absolute mt-1 w-full bg-white shadow-lg rounded-md max-h-60 overflow-auto z-20">
           {isLoading ? (
             <div className="p-4 text-gray-500">Loading...</div>
+          ) : isTyping ? (
+            <div className="p-4 text-gray-500">Typing...</div>
           ) : !inputValue ? (
             <div className="p-4 text-gray-500">Start typing to search...</div>
           ) : suggestions.length === 0 ? (
