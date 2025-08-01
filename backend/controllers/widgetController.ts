@@ -11,7 +11,7 @@ export async function listWidgets(
   next: NextFunction
 ) {
   try {
-    const widgets = await Widget.find().sort({ createdAt: -1 });
+    const widgets = await Widget.find();
     const withWeather = await Promise.all(
       widgets.map(async (w) => ({
         id: w._id,
