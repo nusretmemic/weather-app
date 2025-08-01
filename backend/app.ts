@@ -14,8 +14,6 @@ const app = express();
 
 // Common middleware (CORS, JSON parser)
 app.use(commonMiddleware);
-// Error handling middleware
-app.use(errorHandler);
 
 // API routes
 app.use("/locations", locationRoutes);
@@ -23,6 +21,9 @@ app.use("/widgets", widgetRoutes);
 
 // Root health-check
 app.get("/", (_req, res) => res.send("✅ Weather App API is running"));
+
+// Error handling middleware
+app.use(errorHandler);
 
 // Connect DB & start server
 const PORT = process.env.PORT || 5000;
