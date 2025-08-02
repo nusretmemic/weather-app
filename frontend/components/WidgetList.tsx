@@ -11,7 +11,7 @@ export function WidgetList() {
   };
 
   return (
-    <div className="flex flex-wrap container lg:justify-start justify-center mx-auto gap-8 px-8 pb-8 mt-10 md:mt-0">
+    <div className="flex flex-wrap container lg:justify-space-between justify-center mx-auto gap-8 px-8 pb-8 mt-10 md:mt-0">
       {widgets?.length === 0 && (
         <div className="text-center text-gray-800 w-[500px] m-auto bg-white/80 p-6 rounded-lg shadow-md">
           No widgets added yet. Start by searching for a location.
