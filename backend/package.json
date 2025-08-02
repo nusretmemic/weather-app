@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon app.ts",
     "start": "node --experimental-transform-types app.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "deploy": "bash deploy.sh"
   },
   "keywords": [],
   "author": "",
