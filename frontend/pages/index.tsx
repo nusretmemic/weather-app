@@ -1,4 +1,4 @@
-import { WidgetList } from "@/components/WidgetList";
+import { WidgetList } from "@/components/Widgets/WidgetList";
 import { SearchArea } from "@/components/Search/SearchArea";
 import { Background } from "@/components/Background";
 
