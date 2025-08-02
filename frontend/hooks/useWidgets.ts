@@ -8,6 +8,8 @@ export interface WidgetData {
   location: string;
   weather: {
     temperature: number;
+    temperatureMin: number;
+    temperatureMax: number;
     windSpeed: number;
     weatherCode: number;
     humidity: number;

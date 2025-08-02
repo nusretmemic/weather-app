@@ -1,6 +1,6 @@
 "use client";
 import { useDeleteWidget, useWidgets } from "@/hooks/useWidgets";
-import { WidgetCard } from "./WidgetCard";
+import { WidgetCard } from "./WidgetCard/WidgetCard";
 
 export function WidgetList() {
   const { data: widgets } = useWidgets();
