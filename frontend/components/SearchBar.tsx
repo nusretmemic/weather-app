@@ -5,6 +5,7 @@ import { useLocation, LocationSuggestion } from "@/hooks/useLocation";
 import { Search } from "lucide-react";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
+import { SearchResultItem } from "./SearchResultItem";
 
 interface SearchBarProps {
   onSelect: (loc: LocationSuggestion) => void;
@@ -58,17 +59,15 @@ export function SearchBar({ onSelect }: SearchBarProps) {
             <div className="p-4 text-gray-500">No results found.</div>
           ) : (
             suggestions.map((s) => (
-              <div
+              <SearchResultItem
                 key={`${s.lat}-${s.lng}-${s.name}`}
-                className="px-4 py-3 hover:bg-gray-100 cursor-pointer border-b last:border-b-0 border-gray-200"
+                s={s}
                 onClick={() => {
                   onSelect(s);
-                  setOpen(false);
                   setInput("");
+                  setOpen(false);
                 }}
-              >
-                {s.name}, {s.country}
-              </div>
+              />
             ))
           )}
         </div>
