@@ -1,0 +1,175 @@
+# Weather Dashboard App
+
+A full-stack weather dashboard application built with Next.js (frontend) and Express/TypeScript (backend), deployed on AWS (Amplify, ECR, App Runner). Users can search for cities, add widgets to view live weather data (temperature, wind, humidity), and delete them.
+
+---
+
+## 🚀 Features
+
+- **Dynamic Widgets**: Add/remove multiple weather widgets for different cities.
+- **Live Data**: Fetches real-time weather from Open-Meteo with 5-minute in-memory caching.
+- **City Search**: Autocomplete using geocoding API (Open-Meteo) with debounced input.
+- **Clean UI**: Built with Next.js, shadcn/ui, and Tailwind CSS; responsive and animated.
+- **Deployment**: Frontend on AWS Amplify, backend containerized to ECR & served via App Runner.
+
+---
+
+## Live Demo
+
+[text](https://master.d2ywy9jgi28lsk.amplifyapp.com/)
+
+---
+
+## 📁 Project Structure
+
+```
+/project-root
+├── backend/                # Express API (TypeScript)
+│   ├── cache/              # Cache abstraction (node-cache, in-memory)
+│   ├── controllers/        # Route handlers
+│   ├── middleware/         # Common & error-handling middleware
+|   ├── models              # Data Model (Widget)
+│   ├── routes/             # Router definitions
+│   ├── services/           # Weather & geolocation logic
+│   ├── types/              # Type Definitions
+│   ├── dist/               # Compiled output (gitignored)
+│   ├── app.ts              # Entry file for the backend application
+│   ├── package.json        # Scripts: dev, start, build, deploy
+│   └── Dockerfile
+├── frontend/               # Next.js app
+│   ├── components/         # UI components
+│   ├── hooks/              # React Query & custom hooks
+│   ├── images/             # Static Images
+│   ├── lib/                # Axios config. and tailwind utils
+│   ├── pages/              # Pages (Pages Router)
+│   ├── public/             # Static Assets
+│   ├── styles/             # Global CSS file
+│   ├── utils/              # Helpers (getWeatherImage)
+│   ├── components.json     # Shadcn components config
+│   ├── eslint.config.mjs   # ESLINT Config
+│   ├── postcss.config.mjs  # Tailwind postcss config
+│   ├── package.json        # Scripts: dev, build, start
+│   ├── tsconfig.json       # Typescript config
+│   └── next.config.js
+├── .gitignore
+├── package.json            # Scripts: dev, dev:backend, dev:frontend
+└── README.md
+```
+
+---
+
+## ⚙️ Setup & Local Development
+
+### Prerequisites
+
+- Node.js v18+ & npm
+- Docker (optional, for local container builds)
+- MongoDB Atlas cluster (connection string)
+
+### Backend
+
+1. **Configure `.env`** in `/backend`:
+
+   ```env
+   MONGODB_URI=<your Atlas URI>
+   PORT=5000
+   ```
+
+2. **Install & build**:
+
+   ```bash
+   cd backend
+   npm install
+   npm run build
+   ```
+
+3. **Run locally**:
+
+   ```bash
+   npm run dev      # via ts-node
+   ```
+
+4. **Or Docker**:
+
+   ```bash
+   docker build -t weather-backend .
+   docker run -e MONGODB_URI -p 5000:5000 weather-backend
+   ```
+
+### Frontend
+
+1. **Configure** (if needed): set `NEXT_PUBLIC_API_URL=http://localhost:5000` in `.env.local`.
+2. **Install & run**:
+
+   ```bash
+   cd frontend
+   npm install
+   npm run dev      # http://localhost:3000
+   ```
+
+3. **Build**:
+
+   ```bash
+   npm run build
+   npm start        # serves production build
+   ```
+
+### Alternatively
+
+**Local Development Server (Frontend & Backend)**:
+
+```bash
+npm install
+npm run dev # Frontend: http://localhost:3000, Backend: http://localhost:5000
+```
+
+---
+
+## 📝 API Reference
+
+All endpoints are prefixed with `/api` if served via combined server, or root if standalone.
+
+| Method | Endpoint                  | Description                                 |
+| ------ | ------------------------- | ------------------------------------------- |
+| GET    | `/widgets`                | List all widgets with live weather          |
+| POST   | `/widgets`                | Create widget: `{ id, location, lat, lng }` |
+| DELETE | `/widgets/:id`            | Delete widget by ID                         |
+| GET    | `/locations/search?q=...` | Search for city suggestions                 |
+
+---
+
+## 🏗️ Architecture
+
+- **Express API** handles `/widgets` with TypeScript, in-memory caching via `node-cache`.
+- **Next.js Frontend** uses React Query (tanstack) for data fetching, shadcn/ui + Tailwind for UI.
+- **Deployment**:
+
+  - Frontend on AWS Amplify (CI/CD on Git push).
+  - Backend on AWS App Runner (ECR image, auto-deploy on push).
+
+---
+
+## 📦 Deployment
+
+### Backend
+
+```bash
+cd backend
+npm run deploy   # runs deploy.sh to build, tag & push Docker image
+```
+
+App Runner auto-deploys new image.
+
+### Frontend
+
+```bash
+git push          # Amplify hooks deploy on push to master
+```
+
+---
+
+## 🤝 Contributing
+
+Feel free to open issues or pull requests.
+
+© 2025 Weather Dashboard App by Nusret Memic
