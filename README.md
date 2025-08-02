@@ -14,9 +14,9 @@ A full-stack weather dashboard application built with Next.js (frontend) and Exp
 
 ---
 
-## Live Demo
+## 🔗 Live Demo
 
-[text](https://master.d2ywy9jgi28lsk.amplifyapp.com/)
+[https://master.d2ywy9jgi28lsk.amplifyapp.com](https://master.d2ywy9jgi28lsk.amplifyapp.com)
 
 ---
 
@@ -127,8 +127,6 @@ npm run dev # Frontend: http://localhost:3000, Backend: http://localhost:5000
 
 ## 📝 API Reference
 
-All endpoints are prefixed with `/api` if served via combined server, or root if standalone.
-
 | Method | Endpoint                  | Description                                 |
 | ------ | ------------------------- | ------------------------------------------- |
 | GET    | `/widgets`                | List all widgets with live weather          |
@@ -140,7 +138,7 @@ All endpoints are prefixed with `/api` if served via combined server, or root if
 
 ## 🏗️ Architecture
 
-- **Express API** handles `/widgets` with TypeScript, in-memory caching via `node-cache`.
+- **Express API** handles `/widgets` & `/locations` with TypeScript. Live Weather Data is cached for 5 minutes by in-memory caching via `node-cache`.
 - **Next.js Frontend** uses React Query (tanstack) for data fetching, shadcn/ui + Tailwind for UI.
 - **Deployment**:
 
