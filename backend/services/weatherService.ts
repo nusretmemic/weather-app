@@ -17,14 +17,17 @@ export async function getWeather(w: IWidget): Promise<WeatherData> {
   }
 
   // No cache or expired → fetch fresh
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${w.lat}&longitude=${w.lng}&&current=weather_code,temperature_2m,relative_humidity_2m,wind_speed_10m`;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${w.lat}&longitude=${w.lng}&&current=weather_code,temperature_2m,relative_humidity_2m,wind_speed_10m&daily=temperature_2m_min,temperature_2m_max`;
   const res = await axios.get(url);
-  const payload = res.data.current;
+  const { current, daily } = res.data;
   const result: WeatherData = {
-    temperature: payload.temperature_2m,
-    windSpeed: payload.wind_speed_10m,
-    weatherCode: payload.weather_code,
-    humidity: payload.relative_humidity_2m,
+    temperature: current.temperature_2m,
+    temperatureMin: daily.temperature_2m_min[0],
+    temperatureMax: daily.temperature_2m_max[0],
+    windSpeed: current.wind_speed_10m,
+    weatherCode: current.weather_code,
+    humidity: current.relative_humidity_2m,
+
     updatedAt: new Date(),
   };
 
