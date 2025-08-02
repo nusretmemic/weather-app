@@ -1,5 +1,5 @@
 "use client";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/common/card";
 import type { WidgetData } from "@/hooks/useWidgets";
 
 import { DeleteButton } from "./DeleteButton";

@@ -1,6 +1,6 @@
 import { LocationSuggestion } from "@/hooks/useLocation";
 import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/common/badge";
 
 interface SearchResultItemProps {
   s: LocationSuggestion;
