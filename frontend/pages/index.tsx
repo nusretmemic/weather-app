@@ -1,5 +1,5 @@
 import { WidgetList } from "@/components/WidgetList";
-import { SearchArea } from "@/components/SearchArea";
+import { SearchArea } from "@/components/Search/SearchArea";
 import { Background } from "@/components/Background";
 
 export default function Home() {
