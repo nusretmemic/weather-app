@@ -6,7 +6,7 @@ export async function searchLocations(
 ): Promise<LocationSuggestion[]> {
   const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
     city
-  )}&count=10&language=en&format=json`;
+  )}&count=5&language=en&format=json`;
   const resp = await axios.get(url);
 
   const results = resp.data.results || [];
