@@ -1,13 +1,11 @@
-"use client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { WidgetData } from "@/hooks/useWidgets";
-import { ThermometerSun, Trash2, Wind } from "lucide-react";
-import ClodyImage from "@/images/cloudy-animated.png";
-import SunImage from "@/images/sun.png";
+import { Droplets, ThermometerSun, Trash2, Wind } from "lucide-react";
 
 import { format } from "date-fns";
 import Image from "next/image";
+import { getWeatherImage } from "@/utils/getWeatherImage";
 
 interface WidgetCardProps {
   widget: WidgetData;
@@ -29,7 +27,7 @@ export function WidgetCard({ widget, onDelete }: WidgetCardProps) {
         </Button>
         <div className="flex items-center justify-between">
           <Image
-            src={SunImage.src}
+            src={getWeatherImage(widget.weather.weatherCode)}
             alt={"Weather Icon"}
             className="mr-auto"
             width={72}
@@ -40,19 +38,28 @@ export function WidgetCard({ widget, onDelete }: WidgetCardProps) {
             {Math.round(widget.weather.temperature)}°C
           </span>
         </div>
-        <div className="flex justify-between items-start my-8">
+        <div className="flex justify-between items-start my-8 h-16">
           <h3 className="text-2xl font-bold text-white text-shadow-lg">
             {widget.location}
           </h3>
         </div>
-        <div className="space-y-2 text-gray-700">
+        <div className="space-y-2 mb-2 text-gray-700">
           <div className="flex items-center">
-            <Wind className="mr-2 text-blue-500" size={40} />
+            <Wind className="mr-2 text-orange-300" size={30} />
             <span className="font-bold text-white text-2xl">
               {widget.weather.windSpeed} m/s
             </span>
           </div>
         </div>
+        <div className="space-y-2 text-gray-700">
+          <div className="flex items-center">
+            <Droplets className="mr-2 text-blue-200" size={30} />
+            <span className="font-bold text-white text-2xl">
+              {widget.weather.humidity}%
+            </span>
+          </div>
+        </div>
+
         <div className="flex items-center absolute bottom-4 right-4">
           <span className="mr-2 text-gray-500">🕒</span>
           <span className="text-sm text-white">
