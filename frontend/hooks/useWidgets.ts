@@ -33,6 +33,7 @@ export function useWidgets() {
   return useQuery<WidgetData[], Error>({
     queryKey: ["widgets"],
     queryFn: fetchWidgets,
+    refetchInterval: 60000, // Refetch every minute
   });
 }
 
