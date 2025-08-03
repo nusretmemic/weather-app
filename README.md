@@ -49,10 +49,9 @@ A full-stack weather widgets application built with Next.js (frontend) and Expre
 ├── frontend/               # Next.js app
 │   ├── components/         # UI components
 │   ├── hooks/              # React Query & custom hooks
-│   ├── images/             # Static Images
 │   ├── lib/                # Axios config. and tailwind utils
 │   ├── pages/              # Pages (Pages Router)
-│   ├── public/             # Static Assets
+│   ├── public/             # Static Assets (images, icons)
 │   ├── styles/             # Global CSS file
 │   ├── utils/              # Helpers (getWeatherImage)
 │   ├── components.json     # Shadcn components config
