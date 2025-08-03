@@ -10,9 +10,11 @@ export async function getWeather(w: IWidget): Promise<WeatherData> {
   const key = w._id.toString();
 
   // Check cache
+  // If we have a cached entry, return it
+  // This avoids unnecessary API calls and speeds up response time
+  // Cache is keyed by widget._id to ensure uniqueness
   const cached = getCached<WeatherData>(key);
   if (cached) {
-    console.log("☁️  Returning cached weather for widget", key);
     return cached.data;
   }
 
