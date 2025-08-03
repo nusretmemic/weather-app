@@ -109,7 +109,7 @@ A full-stack weather dashboard application built with Next.js (frontend) and Exp
 
    ```bash
    docker build -t weather-backend .
-   docker run -e MONGODB_URI -p 5000:5000 weather-backend
+   docker run --rm --env-file .env -p 5000:5000 weather-backend
    ```
 
 ### Frontend
