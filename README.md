@@ -10,6 +10,8 @@ A full-stack weather dashboard application built with Next.js (frontend) and Exp
 - **Live Data**: Fetches real-time weather from Open-Meteo with 5-minute in-memory caching.
 - **City Search**: Autocomplete using geocoding API (Open-Meteo) with debounced input.
 - **Clean UI**: Built with Next.js, shadcn/ui, and Tailwind CSS; responsive and animated.
+- **API Documentation**: Interactive Swagger UI available at `/docs`, powered by an OpenAPI 3.0 spec.
+- **Comprehensive Testing**: Jest & Supertest suite with an in-memory MongoDB for all backend endpoints.
 - **Deployment**: Frontend on AWS Amplify, backend containerized to ECR & served via App Runner.
 
 ---
@@ -25,17 +27,25 @@ A full-stack weather dashboard application built with Next.js (frontend) and Exp
 ```
 /project-root
 ├── backend/                # Express API (TypeScript)
-│   ├── cache/              # Cache abstraction (node-cache, in-memory)
+│   ├── __tests__/          # Jest test suites
+│   ├── cache/              # Cache abstraction (node-cache)
 │   ├── controllers/        # Route handlers
 │   ├── middleware/         # Common & error-handling middleware
-│   ├── models              # Data Model (Widget)
+│   ├── models/             # Mongoose models
 │   ├── routes/             # Router definitions
-│   ├── services/           # Weather & geolocation logic
-│   ├── types/              # Type Definitions
+│   ├── services/           # Business logic (weather, geocoding)
+│   ├── types/              # Shared TypeScript interfaces
 │   ├── dist/               # Compiled output (gitignored)
-│   ├── app.ts              # Entry file for the backend application
-│   ├── package.json        # Scripts: dev, start, build, deploy
-│   └── Dockerfile
+│   ├── app.ts              # Entry point
+│   ├── deploy.sh           # Deployment script
+│   ├── Dockerfile          # Production container build
+│   ├── jest.config.ts      # Jest configuration
+│   ├── jest.setup.ts       # In-memory MongoDB setup
+│   ├── openapi.yaml        # OpenAPI (Swagger) spec
+│   ├── package.json        # Scripts: dev, build, start, deploy, test
+│   ├── package-lock.json
+│   ├── tsconfig.json
+│   └── .env                # Environment variables
 ├── frontend/               # Next.js app
 │   ├── components/         # UI components
 │   ├── hooks/              # React Query & custom hooks
@@ -89,7 +99,13 @@ A full-stack weather dashboard application built with Next.js (frontend) and Exp
    npm run dev      # via ts-node
    ```
 
-4. **Or Docker**:
+4. **Run tests**:
+
+   ```bash
+   npm test         # runs Jest tests
+   ```
+
+5. **Or Docker**:
 
    ```bash
    docker build -t weather-backend .
