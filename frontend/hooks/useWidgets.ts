@@ -48,12 +48,9 @@ export function useAddWidget() {
       toast.success("Your widget was added!");
     },
     onError: (error: any) => {
-      // Check for duplicate widget error
-      // MongoDB duplicate key error code is 11000
-      if (
-        error.response?.data?.message &&
-        error.response.data.message.toLowerCase().includes("e11000")
-      ) {
+      console.error(error.response);
+      // Check for duplicate widget error Status 409
+      if (error.response.status === 409) {
         toast.error("That widget already exists.");
       } else {
         toast.error(error.message || "Failed to add widget.");

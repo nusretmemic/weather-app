@@ -35,12 +35,23 @@ export async function createWidget(
 ) {
   try {
     const { id, location, lat, lng } = req.body;
+    // Validation error
     if (!location || typeof lat !== "number" || typeof lng !== "number") {
-      return res.status(400).json({ error: "location, lat, and lng required" });
+      return res.status(400).json({
+        error: "Validation failed",
+        details: ["location, lat, and lng are required and must be valid"],
+      });
     }
     const widget = await Widget.create({ _id: id, location, lat, lng });
     res.status(201).json(widget);
-  } catch (err) {
+  } catch (err: any) {
+    // Duplicate key / conflict
+    if (err.code === 11000) {
+      return res.status(409).json({
+        error: "Duplicate widget",
+        details: [`Widget with id ${req.body.id} already exists.`],
+      });
+    }
     next(err);
   }
 }
@@ -54,8 +65,19 @@ export async function deleteWidget(
   next: NextFunction
 ) {
   try {
-    const { id } = req.params;
-    await Widget.deleteOne({ _id: id });
+    const id = Number(req.params.id);
+    if (isNaN(id)) {
+      return res.status(400).json({
+        error: "Validation failed",
+        details: ["Parameter 'id' must be a number."],
+      });
+    }
+    const deleted = await Widget.findByIdAndDelete(id);
+    if (!deleted) {
+      return res.status(404).json({
+        error: "Widget not found",
+      });
+    }
     res.status(204).send();
   } catch (err) {
     next(err);

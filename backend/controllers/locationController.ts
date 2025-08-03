@@ -11,14 +11,18 @@ export async function locationSearchHandler(
 ) {
   const { q } = req.query;
   if (typeof q !== "string" || !q.trim()) {
-    return res.status(400).json({ error: "q query parameter is required" });
+    return res.status(400).json({
+      error: "Validation failed",
+      details: [
+        "Query parameter 'q' is required and must be a non-empty string",
+      ],
+    });
   }
 
   try {
     const suggestions = await searchLocations(q);
     res.json(suggestions);
   } catch (err) {
-    console.error("Location search failed:", err);
     next(err);
   }
 }
