@@ -10,13 +10,15 @@ A full-stack weather widgets application built with Next.js (frontend) and Expre
 - **Live Data**: Fetches real-time weather from Open-Meteo with 5-minute in-memory caching.
 - **City Search**: Autocomplete using geocoding API (Open-Meteo) with debounced input.
 - **Clean UI**: Built with Next.js, shadcn/ui, and Tailwind CSS; responsive and animated.
-- **API Documentation**: Interactive Swagger UI available at `/docs`, powered by an OpenAPI 3.0 spec.
+- **API Documentation**: Interactive Swagger UI available at `{backend-url}/docs`, powered by an OpenAPI 3.0 spec.
 - **Comprehensive Testing**: Jest & Supertest suite with an in-memory MongoDB for all backend endpoints.
 - **Deployment**: Frontend on AWS Amplify, backend containerized to ECR & served via App Runner.
 
 ---
 
 ## 🔗 Live Demo
+
+You can try the live demo of the application here:
 
 [https://master.d2ywy9jgi28lsk.amplifyapp.com](https://master.d2ywy9jgi28lsk.amplifyapp.com)
 
@@ -59,7 +61,7 @@ A full-stack weather widgets application built with Next.js (frontend) and Expre
 │   ├── postcss.config.mjs  # Tailwind postcss config
 │   ├── package.json        # Scripts: dev, build, start
 │   ├── tsconfig.json       # Typescript config
-│   └── next.config.js
+│   └── next.config.js      # Next.js configuration
 ├── .gitignore
 ├── package.json            # Scripts: dev, dev:backend, dev:frontend
 └── README.md
@@ -84,18 +86,19 @@ A full-stack weather widgets application built with Next.js (frontend) and Expre
    PORT=5000
    ```
 
-2. **Install & build**:
+2. **Install & run**:
 
    ```bash
    cd backend
    npm install
-   npm run build
+   npm run dev     # starts in development mode with nodemon
    ```
 
-3. **Run locally**:
+3. **Build**:
 
    ```bash
-   npm run dev      # via ts-node
+   npm run build  # compiles TypeScript to /dist directory
+   npm start      # starts the Express server
    ```
 
 4. **Run tests**:
@@ -142,9 +145,9 @@ npm run dev # Frontend: http://localhost:3000, Backend: http://localhost:5000
 
 ## 📝 API Reference
 
-Full API documentation is available at `/docs` (Swagger UI).
+Full API documentation is available at `{backend-url}/docs` (Swagger UI).
 
-Click here to view: [API Docs](https://piapujkq2j.eu-central-1.awsapprunner.com/docs)
+Click here to view: [API Documentation](https://piapujkq2j.eu-central-1.awsapprunner.com/docs)
 
 ### Endpoints
 
@@ -159,7 +162,9 @@ Click here to view: [API Docs](https://piapujkq2j.eu-central-1.awsapprunner.com/
 
 ## 🏗️ Architecture
 
-- **Express API** handles `/widgets` & `/locations` with TypeScript. Live Weather Data is cached for 5 minutes by in-memory caching via `node-cache`.
+- **Express API** is built with TypeScript, using Mongoose for MongoDB interactions.
+- **Caching**: In-memory 5-minute caching for weather data using `node-cache`.
+- **Testing**: Jest with Supertest for API tests, using an in-memory MongoDB instance.
 - **Next.js Frontend** uses React Query (tanstack) for data fetching, shadcn/ui + Tailwind for UI.
 - **Deployment**:
 
