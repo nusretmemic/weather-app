@@ -22,6 +22,9 @@ RUN npm ci --only=production
 # Copy compiled output
 COPY --from=builder /app/dist ./dist
 
+# Copy API spec so swagger-ui-express can load it
+COPY openapi.yaml ./
+
 # Default environment variables
 ENV NODE_ENV=production \
     PORT=5000
