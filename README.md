@@ -1,6 +1,6 @@
-# Weather Dashboard App
+# Weather Widgets App
 
-A full-stack weather dashboard application built with Next.js (frontend) and Express/TypeScript (backend), deployed on AWS (Amplify, ECR, App Runner). Users can search for cities, add widgets to view live weather data (temperature, wind, humidity), and delete them.
+A full-stack weather widgets application built with Next.js (frontend) and Express/TypeScript (backend), deployed on AWS (Amplify, ECR, App Runner). Users can search for cities, add widgets to view live weather data (temperature, wind, humidity), and delete them.
 
 ---
 
