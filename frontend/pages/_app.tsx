@@ -5,14 +5,11 @@ import React from "react";
 import { Toaster } from "sonner";
 
 export default function App({ Component, pageProps }: AppProps) {
-  // Instead do this, which ensures each request has its own cache:
   const [queryClient] = React.useState(
     () =>
       new QueryClient({
         defaultOptions: {
           queries: {
-            // With SSR, we usually want to set some default staleTime
-            // above 0 to avoid refetching immediately on the client
             staleTime: 60 * 1000,
           },
         },
