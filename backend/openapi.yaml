@@ -1,0 +1,260 @@
+openapi: 3.1.0
+info:
+  title: Weather Dashboard API
+  version: 1.0.0
+  description: >
+    REST API for managing weather widgets and searching location suggestions.
+servers:
+  - url: http://localhost:5000
+    description: Local development
+  - url: https://piapujkq2j.eu-central-1.awsapprunner.com
+    description: Production deployment
+
+paths:
+  /widgets:
+    get:
+      summary: List all widgets with live weather data
+      responses:
+        "200":
+          description: Array of widgets enriched with current weather
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/WidgetWithWeather"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      summary: Create a new widget
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WidgetCreateInput"
+      responses:
+        "201":
+          description: The created widget record
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IWidget"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "409":
+          $ref: "#/components/responses/ConflictError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /widgets/{id}:
+    delete:
+      summary: Delete a widget by its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Numeric widget identifier
+      responses:
+        "204":
+          description: Widget deleted successfully (no content)
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /locations/search:
+    get:
+      summary: Search for location suggestions
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+          description: City name to search for
+      responses:
+        "200":
+          description: Array of location suggestions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LocationSuggestion"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+components:
+  schemas:
+    IWidget:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique widget identifier
+        location:
+          type: string
+          description: City name and country
+        lat:
+          type: number
+          format: float
+          description: Latitude of the location
+        lng:
+          type: number
+          format: float
+          description: Longitude of the location
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        userId:
+          type: string
+          nullable: true
+          description: Optional user association
+      required: [id, location, lat, lng, createdAt]
+
+    WidgetCreateInput:
+      type: object
+      properties:
+        id:
+          type: integer
+        location:
+          type: string
+        lat:
+          type: number
+          format: float
+        lng:
+          type: number
+          format: float
+      required: [id, location, lat, lng]
+
+    WeatherData:
+      type: object
+      properties:
+        temperature:
+          type: number
+          format: float
+        temperatureMin:
+          type: number
+          format: float
+        temperatureMax:
+          type: number
+          format: float
+        windSpeed:
+          type: number
+          format: float
+        weatherCode:
+          type: integer
+        humidity:
+          type: number
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - temperature
+        - temperatureMin
+        - temperatureMax
+        - windSpeed
+        - weatherCode
+        - humidity
+        - updatedAt
+
+    WidgetWithWeather:
+      allOf:
+        - $ref: "#/components/schemas/IWidget"
+        - type: object
+          properties:
+            weather:
+              $ref: "#/components/schemas/WeatherData"
+
+    LocationSuggestion:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country:
+          type: string
+        lat:
+          type: number
+          format: float
+        lng:
+          type: number
+          format: float
+      required: [id, name, country, lat, lng]
+
+    ValidationError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Validation failed"
+        details:
+          type: array
+          items:
+            type: string
+          example: ["location, lat, and lng are required and must be valid"]
+      required: [error, details]
+
+    DuplicateError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Duplicate widget"
+        details:
+          type: array
+          items:
+            type: string
+          example: ["Widget with id 123 already exists."]
+      required: [error, details]
+
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Widget not found"
+      required: [error]
+
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Internal server error"
+      required: [error]
+
+  responses:
+    ValidationError:
+      description: Input validation failed
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ValidationError"
+    ConflictError:
+      description: Duplicate resource
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/DuplicateError"
+    NotFoundError:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/NotFoundError"
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/InternalServerError"

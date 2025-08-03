@@ -1,19 +1,25 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import swaggerUi from "swagger-ui-express";
+import YAML from "yamljs";
 
 import { commonMiddleware } from "./middleware";
 import locationRoutes from "./routes/locationRoutes";
 import widgetRoutes from "./routes/widgetRoutes";
 import { errorHandler } from "./middleware/errorHandler";
 
-dotenv.config(); // Load environment variables
+dotenv.config();
 
 // Initialize Express app
 const app = express();
 
 // Common middleware (CORS, JSON parser)
 app.use(commonMiddleware);
+
+// Swagger documentation setup
+const openapiDocument = YAML.load("./openapi.yaml");
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(openapiDocument));
 
 // API routes
 app.use("/locations", locationRoutes);

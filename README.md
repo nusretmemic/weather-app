@@ -28,7 +28,7 @@ A full-stack weather dashboard application built with Next.js (frontend) and Exp
 │   ├── cache/              # Cache abstraction (node-cache, in-memory)
 │   ├── controllers/        # Route handlers
 │   ├── middleware/         # Common & error-handling middleware
-|   ├── models              # Data Model (Widget)
+│   ├── models              # Data Model (Widget)
 │   ├── routes/             # Router definitions
 │   ├── services/           # Weather & geolocation logic
 │   ├── types/              # Type Definitions
@@ -127,6 +127,12 @@ npm run dev # Frontend: http://localhost:3000, Backend: http://localhost:5000
 
 ## 📝 API Reference
 
+Full API documentation is available at `/docs` (Swagger UI).
+
+Click here to view: [API Docs](https://piapujkq2j.eu-central-1.awsapprunner.com/docs)
+
+### Endpoints
+
 | Method | Endpoint                  | Description                                 |
 | ------ | ------------------------- | ------------------------------------------- |
 | GET    | `/widgets`                | List all widgets with live weather          |
@@ -156,7 +162,7 @@ cd backend
 npm run deploy   # runs deploy.sh to build, tag & push Docker image
 ```
 
-App Runner auto-deploys new image.
+AWS App Runner auto-deploys new image.
 
 ### Frontend
 
